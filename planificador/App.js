@@ -1,16 +1,24 @@
 import React from 'react';
 
-import {View, ScrollView, StyleSheet, Text} from 'react-native';
+import {View, ScrollView, StyleSheet, Text, Alert} from 'react-native';
 
 import Header from './src/components/Header';
 import NuevoPresupuesto from './src/components/NuevoPresupuesto';
 
 const App = () => {
+  const handleNuevoPresupuesto = presupuesto => {
+    if (Number(presupuesto) > 0) {
+      console.log(typeof Number(presupuesto));
+    } else {
+      Alert.alert('Error', 'El presupuesto debe ser mayor a 0');
+    }
+  };
+
   return (
     <View style={styles.contenedor}>
       <View style={styles.header}>
         <Header />
-        <NuevoPresupuesto />
+        <NuevoPresupuesto handleNuevoPresupuesto={handleNuevoPresupuesto} />
       </View>
     </View>
   );
