@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {View, ScrollView, StyleSheet, Text, Alert} from 'react-native';
 
 import Header from './src/components/Header';
 import NuevoPresupuesto from './src/components/NuevoPresupuesto';
+import ControlPresupuesto from './src/components/ControlPresupuesto';
 
 const App = () => {
+  const [isValidPresupuesto, setIsValidPresupuesto] = useState(false);
+
   const handleNuevoPresupuesto = presupuesto => {
     if (Number(presupuesto) > 0) {
-      console.log(typeof Number(presupuesto));
+      setIsValidPresupuesto(true);
     } else {
       Alert.alert('Error', 'El presupuesto debe ser mayor a 0');
     }
@@ -18,7 +21,11 @@ const App = () => {
     <View style={styles.contenedor}>
       <View style={styles.header}>
         <Header />
-        <NuevoPresupuesto handleNuevoPresupuesto={handleNuevoPresupuesto} />
+        {isValidPresupuesto ? (
+          <ControlPresupuesto />
+        ) : (
+          <NuevoPresupuesto handleNuevoPresupuesto={handleNuevoPresupuesto} />
+        )}
       </View>
     </View>
   );
