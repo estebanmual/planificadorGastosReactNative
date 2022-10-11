@@ -19,6 +19,7 @@ function ControlPresupuesto(props) {
 
     setDisponible(totalDisponible);
     setGastado(totalGastado);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

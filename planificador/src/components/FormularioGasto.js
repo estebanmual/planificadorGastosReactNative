@@ -10,7 +10,9 @@ import {
 import {Picker} from '@react-native-picker/picker';
 import globalStyles from '../styles';
 
-const FormularioGasto = ({setModal}) => {
+const FormularioGasto = props => {
+  const {setModal, handleNuevoGasto} = props;
+
   const [nombre, setNombre] = useState('');
   const [cantidad, setCantidad] = useState('');
   const [categoria, setCategoria] = useState('');
@@ -61,7 +63,9 @@ const FormularioGasto = ({setModal}) => {
           </Picker>
         </View>
 
-        <Pressable style={styles.submitBtn}>
+        <Pressable
+          style={styles.submitBtn}
+          onPress={() => handleNuevoGasto({nombre, cantidad, categoria})}>
           <Text style={styles.submitBtnTexto}>Agregar Gasto</Text>
         </Pressable>
       </View>

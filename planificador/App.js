@@ -15,6 +15,7 @@ import Header from './src/components/Header';
 import NuevoPresupuesto from './src/components/NuevoPresupuesto';
 import ControlPresupuesto from './src/components/ControlPresupuesto';
 import FormularioGasto from './src/components/FormularioGasto';
+import {generarId} from './src/helpers';
 
 const App = () => {
   const [isValidPresupuesto, setIsValidPresupuesto] = useState(false);
@@ -22,12 +23,26 @@ const App = () => {
   const [gastos, setGastos] = useState([]);
   const [modal, setModal] = useState(false);
 
+  console.log(gastos);
+
   const handleNuevoPresupuesto = presupuesto => {
     if (Number(presupuesto) > 0) {
       setIsValidPresupuesto(true);
     } else {
       Alert.alert('Error', 'El presupuesto debe ser mayor a 0');
     }
+  };
+
+  const handleNuevoGasto = gasto => {
+    if (Object.values(gasto).includes('') || Number(gasto.cantidad) <= 0) {
+      Alert.alert('Error', 'Todos los campos son obligatorios');
+      return;
+    }
+
+    // Agregar el gasto al state
+    gasto.id = generarId();
+    setGastos([...gastos, gasto]);
+    setModal(false);
   };
 
   return (
@@ -46,7 +61,10 @@ const App = () => {
       </View>
       {modal && (
         <Modal visible={modal} animationType={'slide'}>
-          <FormularioGasto setModal={setModal} />
+          <FormularioGasto
+            setModal={setModal}
+            handleNuevoGasto={handleNuevoGasto}
+          />
         </Modal>
       )}
       {isValidPresupuesto && (
