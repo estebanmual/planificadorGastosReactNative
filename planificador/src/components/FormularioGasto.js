@@ -11,7 +11,8 @@ import {Picker} from '@react-native-picker/picker';
 import globalStyles from '../styles';
 
 const FormularioGasto = props => {
-  const {setModal, handleNuevoGasto, setGasto, gasto} = props;
+  const {setModal, handleNuevoGasto, setGasto, gasto, handleEliminarGasto} =
+    props;
 
   const [nombre, setNombre] = useState('');
   const [cantidad, setCantidad] = useState('');
@@ -40,7 +41,9 @@ const FormularioGasto = props => {
           }}>
           <Text style={styles.btnTexto}>Cancelar</Text>
         </Pressable>
-        <Pressable style={[styles.btn, styles.btnEliminar]}>
+        <Pressable
+          style={[styles.btn, styles.btnEliminar]}
+          onLongPress={() => handleEliminarGasto(id)}>
           <Text style={styles.btnTexto}>Eliminar</Text>
         </Pressable>
       </View>
