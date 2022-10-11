@@ -46,7 +46,7 @@ const App = () => {
       </View>
       {modal && (
         <Modal visible={modal} animationType={'slide'}>
-          <FormularioGasto />
+          <FormularioGasto setModal={setModal} />
         </Modal>
       )}
       {isValidPresupuesto && (
