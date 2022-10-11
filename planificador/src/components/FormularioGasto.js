@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   SafeAreaView,
@@ -11,6 +11,10 @@ import {Picker} from '@react-native-picker/picker';
 import globalStyles from '../styles';
 
 const FormularioGasto = ({setModal}) => {
+  const [nombre, setNombre] = useState('');
+  const [cantidad, setCantidad] = useState('');
+  const [categoria, setCategoria] = useState('');
+
   return (
     <SafeAreaView style={styles.contenedor}>
       <View>
@@ -27,6 +31,8 @@ const FormularioGasto = ({setModal}) => {
           <TextInput
             placeholder="Nombre del gasto. ej. Transporte"
             style={styles.input}
+            value={nombre}
+            onChangeText={setNombre}
           />
         </View>
         <View style={styles.campo}>
@@ -35,11 +41,15 @@ const FormularioGasto = ({setModal}) => {
             placeholder="Cantidad del gasto. ej. 300"
             keyboardType="numeric"
             style={styles.input}
+            value={cantidad}
+            onChangeText={setCantidad}
           />
         </View>
         <View style={styles.campo}>
           <Text style={styles.label}>Categoría Gasto</Text>
-          <Picker>
+          <Picker
+            selectedValue={categoria}
+            onValueChange={item => setCategoria(item)}>
             <Picker.Item label="--Seleccione--" value="" />
             <Picker.Item label="Ahorro" value="ahorro" />
             <Picker.Item label="Comida" value="comida" />
