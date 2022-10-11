@@ -61,7 +61,7 @@ const App = () => {
         )}
       </View>
 
-      {isValidPresupuesto && <ListadoGastos />}
+      {isValidPresupuesto && <ListadoGastos gastos={gastos} />}
 
       {modal && (
         <Modal visible={modal} animationType={'slide'}>
