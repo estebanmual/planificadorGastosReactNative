@@ -112,7 +112,7 @@ const App = () => {
         </Modal>
       )}
       {isValidPresupuesto && (
-        <Pressable onPress={() => setModal(true)}>
+        <Pressable style={styles.pressable} onPress={() => setModal(true)}>
           <Image
             source={require('./src/img/nuevo-gasto.png')}
             style={styles.imagen}
@@ -132,12 +132,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#3B82F6',
     minHeight: 400,
   },
-  imagen: {
+  pressable: {
     width: 60,
     height: 60,
     position: 'absolute',
     bottom: 40,
     right: 30,
+  },
+  imagen: {
+    width: 60,
+    height: 60,
   },
 });
 
