@@ -25,8 +25,6 @@ const App = () => {
   const [modal, setModal] = useState(false);
   const [gasto, setGasto] = useState({});
 
-  console.log('gasto', gasto);
-
   const handleNuevoPresupuesto = presupuesto => {
     if (Number(presupuesto) > 0) {
       setIsValidPresupuesto(true);
@@ -36,15 +34,28 @@ const App = () => {
   };
 
   const handleNuevoGasto = gasto => {
-    if (Object.values(gasto).includes('') || Number(gasto.cantidad) <= 0) {
+    if (
+      [gasto.nombre, gasto.categoria, gasto.cantidad].includes('') ||
+      Number(gasto.cantidad) <= 0
+    ) {
       Alert.alert('Error', 'Todos los campos son obligatorios');
       return;
     }
 
-    // Agregar el gasto al state
-    gasto.id = generarId();
-    gasto.fecha = Date.now();
-    setGastos([...gastos, gasto]);
+    if (gasto.id) {
+      const gastosActualizados = gastos.map(gastoActual => {
+        if (gastoActual.id === gasto.id) {
+          return gasto;
+        }
+        return gastoActual;
+      });
+      setGastos(gastosActualizados);
+    } else {
+      // Agregar el gasto al state
+      gasto.id = generarId();
+      gasto.fecha = Date.now();
+      setGastos([...gastos, gasto]);
+    }
     setModal(false);
   };
 
@@ -78,6 +89,7 @@ const App = () => {
             setModal={setModal}
             handleNuevoGasto={handleNuevoGasto}
             setGasto={setGasto}
+            gasto={gasto}
           />
         </Modal>
       )}
