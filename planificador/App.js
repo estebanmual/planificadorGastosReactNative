@@ -1,6 +1,14 @@
 import React, {useState} from 'react';
 
-import {View, ScrollView, StyleSheet, Text, Alert} from 'react-native';
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  Alert,
+  Pressable,
+  Image,
+} from 'react-native';
 
 import Header from './src/components/Header';
 import NuevoPresupuesto from './src/components/NuevoPresupuesto';
@@ -33,6 +41,14 @@ const App = () => {
           />
         )}
       </View>
+      {isValidPresupuesto && (
+        <Pressable>
+          <Image
+            source={require('./src/img/nuevo-gasto.png')}
+            style={styles.imagen}
+          />
+        </Pressable>
+      )}
     </View>
   );
 };
@@ -44,6 +60,13 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#3B82F6',
+  },
+  imagen: {
+    width: 60,
+    height: 60,
+    position: 'absolute',
+    top: 50,
+    right: 20,
   },
 });
 
