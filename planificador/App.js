@@ -31,13 +31,60 @@ const App = () => {
   const [gastosFiltrados, setGastosFiltrados] = useState([]);
 
   useEffect(() => {
-    const almacenarAS = async () => {
-      const nombre = 'Esteban';
-      await AsyncStorage.setItem('prueba_as', nombre);
+    const obtenerPresupuesto = async () => {
+      try {
+        const presupuestoStorage =
+          (await AsyncStorage.getItem('planificador_presupuesto')) ?? 0;
+        if (presupuestoStorage > 0) {
+          setPresupuesto(presupuestoStorage);
+          setIsValidPresupuesto(true);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     };
-    almacenarAS();
-    console.log('Almacenado');
+    obtenerPresupuesto();
   }, []);
+
+  useEffect(() => {
+    if (isValidPresupuesto) {
+      const guardarPresupuestoStorage = async () => {
+        try {
+          await AsyncStorage.setItem('planificador_presupuesto', presupuesto);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      guardarPresupuestoStorage();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isValidPresupuesto]);
+
+  useEffect(() => {
+    const obtenerGastos = async () => {
+      try {
+        const gastosStorage = await AsyncStorage.getItem('planificador_gastos');
+        setGastos(gastosStorage ? JSON.parse(gastosStorage) : []);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    obtenerGastos();
+  }, []);
+
+  useEffect(() => {
+    const guardarGastosStorage = async () => {
+      try {
+        await AsyncStorage.setItem(
+          'planificador_gastos',
+          JSON.stringify(gastos),
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    guardarGastosStorage();
+  }, [gastos]);
 
   const handleNuevoPresupuesto = presupuesto => {
     if (Number(presupuesto) > 0) {
@@ -90,13 +137,36 @@ const App = () => {
     ]);
   };
 
+  const resetearApp = () => {
+    Alert.alert('¿Estás seguro?', 'No podrás recuperar los datos', [
+      {text: 'No', style: 'cancel'},
+      {
+        text: 'Si, resetear',
+        onPress: async () => {
+          try {
+            await AsyncStorage.clear();
+            setIsValidPresupuesto(false);
+            setPresupuesto(0);
+            setGastos([]);
+          } catch (error) {
+            console.log(error);
+          }
+        },
+      },
+    ]);
+  };
+
   return (
     <View style={styles.contenedor}>
       <ScrollView>
         <View style={styles.header}>
           <Header />
           {isValidPresupuesto ? (
-            <ControlPresupuesto presupuesto={presupuesto} gastos={gastos} />
+            <ControlPresupuesto
+              presupuesto={presupuesto}
+              gastos={gastos}
+              resetearApp={resetearApp}
+            />
           ) : (
             <NuevoPresupuesto
               handleNuevoPresupuesto={handleNuevoPresupuesto}

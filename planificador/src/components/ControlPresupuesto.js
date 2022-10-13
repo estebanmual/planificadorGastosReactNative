@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, Image, StyleSheet} from 'react-native';
+import {Text, View, Image, StyleSheet, Pressable, Alert} from 'react-native';
 
 import globalStyles from '../styles';
 import {formatearCantidad} from '../helpers';
 
 function ControlPresupuesto(props) {
-  const {presupuesto, gastos} = props;
+  const {presupuesto, gastos, resetearApp} = props;
 
   const [disponible, setDisponible] = useState(0);
   const [gastado, setGastado] = useState(0);
@@ -27,6 +27,9 @@ function ControlPresupuesto(props) {
         <Image source={require('../img/grafico.jpg')} style={styles.imagen} />
       </View>
       <View style={styles.contenedorTexto}>
+        <Pressable style={styles.boton} onLongPress={() => resetearApp()}>
+          <Text style={styles.textoBoton}>Reiniciar App</Text>
+        </Pressable>
         <Text style={styles.valor}>
           <Text style={styles.label}>Presupuesto: </Text>
           {formatearCantidad(presupuesto)}
@@ -56,6 +59,18 @@ const styles = StyleSheet.create({
   imagen: {
     width: 250,
     height: 250,
+  },
+  boton: {
+    backgroundColor: '#db2777',
+    padding: 10,
+    marginBottom: 40,
+    borderRadius: 5,
+  },
+  textoBoton: {
+    textAlign: 'center',
+    color: '#fff',
+    fontWeight: '700',
+    textTransform: 'uppercase',
   },
   contenedorTexto: {
     marginTop: 50,
