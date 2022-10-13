@@ -25,7 +25,8 @@ const ListadoGastos = ({gastos, setModal, setGasto}) => {
 
 const styles = StyleSheet.create({
   contenedor: {
-    marginVertical: 70,
+    marginTop: 30,
+    marginBottom: 100,
   },
   titulo: {
     color: '#64748B',
