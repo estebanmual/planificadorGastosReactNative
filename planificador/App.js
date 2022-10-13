@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   View,
@@ -28,6 +29,15 @@ const App = () => {
   const [gasto, setGasto] = useState({});
   const [filtro, setFiltro] = useState('');
   const [gastosFiltrados, setGastosFiltrados] = useState([]);
+
+  useEffect(() => {
+    const almacenarAS = async () => {
+      const nombre = 'Esteban';
+      await AsyncStorage.setItem('prueba_as', nombre);
+    };
+    almacenarAS();
+    console.log('Almacenado');
+  }, []);
 
   const handleNuevoPresupuesto = presupuesto => {
     if (Number(presupuesto) > 0) {
